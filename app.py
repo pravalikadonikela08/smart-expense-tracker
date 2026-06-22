@@ -10,16 +10,24 @@ app = Flask(__name__)
 app.secret_key = "expense_tracker_secret"
 
 # Database Connection
-conn = mysql.connector.connect(
-    host=os.getenv("MYSQLHOST"),
-    user=os.getenv("MYSQLUSER"),
-    password=os.getenv("MYSQLPASSWORD"),
-    database=os.getenv("MYSQLDATABASE"),
-    port=int(os.getenv("MYSQLPORT"))
-)
 
+
+if os.getenv("MYSQLHOST"):
+    conn = mysql.connector.connect(
+        host=os.getenv("MYSQLHOST"),
+        user=os.getenv("MYSQLUSER"),
+        password=os.getenv("MYSQLPASSWORD"),
+        database=os.getenv("MYSQLDATABASE"),
+        port=int(os.getenv("MYSQLPORT"))
+    )
+else:
+    conn = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="",
+        database="expense_tracker"
+    )
 cursor = conn.cursor()
-
 
 # Home Page
 @app.route('/')
