@@ -11,6 +11,10 @@ app.secret_key = "expense_tracker_secret"
 
 # Database Connection
 
+print("MYSQLHOST =", os.getenv("MYSQLHOST"))
+print("MYSQLUSER =", os.getenv("MYSQLUSER"))
+print("MYSQLDATABASE =", os.getenv("MYSQLDATABASE"))
+print("MYSQLPORT =", os.getenv("MYSQLPORT"))
 
 if os.getenv("MYSQLHOST"):
     conn = mysql.connector.connect(
