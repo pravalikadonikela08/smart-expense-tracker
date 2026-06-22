@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, session
 #from werkzeug.security import generate_password_hash, check_password_hash
 import mysql.connector
+import os
 import pandas as pd
 from flask import send_file
 from reportlab.pdfgen import canvas
@@ -10,13 +11,15 @@ app.secret_key = "expense_tracker_secret"
 
 # Database Connection
 conn = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="",
-    database="expense_tracker"
+    host=os.getenv("MYSQLHOST"),
+    user=os.getenv("MYSQLUSER"),
+    password=os.getenv("MYSQLPASSWORD"),
+    database=os.getenv("MYSQLDATABASE"),
+    port=int(os.getenv("MYSQLPORT"))
 )
 
 cursor = conn.cursor()
+
 
 # Home Page
 @app.route('/')
