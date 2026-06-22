@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Dashboard</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>💰 Smart Expense Tracker</h1>
+
+    <h2>Welcome {{ session['user_name'] }} 👋</h2>
+
+    <div style="text-align:center; margin-top:20px;">
+
+        <a href="/add_expense">➕ Add Expense</a>
+
+        <a href="/view_expenses">📋 View Expenses</a>
+        <a href="/profile">👤 Profile</a>
+
+        <a href="/export_excel">📄 Export Excel</a>
+        <a href="/export_pdf">📑 Export PDF</a>
+
+        <a href="/set_budget">💰 Set Budget</a>
+
+        <a href="/logout">🚪 Logout</a>
+
+    </div>
+
+    <br>
+
+    <div style="display:flex; justify-content:center; gap:20px; flex-wrap:wrap;">
+
+        <div class="card">
+
+            <h3>💰 Total Expenses</h3>
+
+            <h2 style="color:black;">
+                ₹{{ total_expense }}
+            </h2>
+
+        </div>
+
+        <div class="card">
+
+            <h3>📋 Total Records</h3>
+
+            <h2 style="color:black;">
+                {{ total_records }}
+            </h2>
+
+        </div>
+
+        <div class="card">
+
+            <h3>🎯 Budget</h3>
+
+            <h2 style="color:black;">
+                ₹{{ budget_amount }}
+            </h2>
+
+        </div>
+
+    </div>
+
+    <br>
+
+    {% if budget_message %}
+
+    <h2 style="text-align:center; color:red;">
+        {{ budget_message }}
+    </h2>
+
+    {% endif %}
+
+    <br>
+
+    <div class="card" style="width:700px; margin:auto;">
+
+        <h3>📊 Expense Distribution</h3>
+
+        <canvas id="expenseChart"></canvas>
+
+    </div>
+
+</div>
+
+<script>
+
+const ctx = document.getElementById('expenseChart');
+
+new Chart(ctx, {
+
+    type: 'pie',
+
+    data: {
+
+        labels: {{ categories | tojson }},
+
+        datasets: [{
+
+            data: {{ amounts | tojson }}
+
+        }]
+
+    },
+
+    options: {
+
+        responsive: true
+
+    }
+
+});
+
+
+</script>
+<br><br>
+
+<div class="card" style="width:700px; margin:auto;">
+
+    <h3>📅 Monthly Expense Report</h3>
+
+    <table border="1" width="100%">
+
+        <tr>
+            <th>Month</th>
+            <th>Total Expense</th>
+        </tr>
+
+        {% for month in monthly_data %}
+
+        <tr>
+            <td>{{ month[0] }}</td>
+            <td>₹{{ month[1] }}</td>
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>View Expenses</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<h2>All Expenses</h2>
+<form method="GET">
+
+    <input type="text"
+           name="search"
+           placeholder="Search Category">
+
+    <button type="submit">
+        🔍 Search
+    </button>
+
+</form>
+
+<br>
+
+<table border="1">
+
+    <tr>
+        <th>ID</th>
+        <th>Category</th>
+        <th>Amount</th>
+        <th>Description</th>
+        <th>Actions</th>
+    </tr>
+
+    {% for expense in expenses %}
+    <tr>
+        <td>{{ expense[0] }}</td>
+        <td>{{ expense[1] }}</td>
+        <td>{{ expense[2] }}</td>
+        <td>{{ expense[3] }}</td>
+
+        <td>
+            <a href="/edit_expense/{{ expense[0] }}">Edit</a>
+            |
+            <a href="/delete_expense/{{ expense[0] }}">Delete</a>
+        </td>
+    </tr>
+    {% endfor %}
+
+</table>
+
+<br>
+
+<div class="total-box">
+    Total Expenses: ₹{{ total }}
+</div>
+
+<br>
+
+<a href="/dashboard">Back to Dashboard</a>
+
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Profile</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container">
+
+    <h1>👤 User Profile</h1>
+
+    <div class="card">
+
+        <h3>Name: {{ user[0] }}</h3>
+
+        <h3>Email: {{ user[1] }}</h3>
+
+        <h3>Total Records: {{ total_records }}</h3>
+
+        <h3>Total Expense: ₹{{ total_expense }}</h3>
+
+    </div>
+
+    <br>
+
+    <a href="/dashboard">⬅ Back to Dashboard</a>
+
+</div>
+
+</body>
+</html>
